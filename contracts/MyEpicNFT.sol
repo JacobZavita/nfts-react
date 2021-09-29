@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity 0.8.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -13,6 +13,7 @@ import { Base64 } from "./libraries/Base64.sol";
 contract MyEpicNFT is ERC721URIStorage {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
+  uint totalMinted;
 
   string svgPartOne = "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: serif; font-size: 18px; }</style><rect width='100%' height='100%' fill='";
   string svgPartTwo = "'/><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
@@ -59,6 +60,8 @@ contract MyEpicNFT is ERC721URIStorage {
   }
 
   function makeAnEpicNFT() public {
+    require(_tokenIds.current() <= 50);
+
     uint256 newItemId = _tokenIds.current();
 
     string memory first = pickRandomFirstWord(newItemId);
@@ -91,6 +94,8 @@ contract MyEpicNFT is ERC721URIStorage {
     console.log(finalTokenUri);
     console.log("--------------------\n");
 
+    totalMinted += 1;
+
     // actually mint the NFT to the sender using msg.sender.
     _safeMint(msg.sender, newItemId);
 
@@ -102,7 +107,12 @@ contract MyEpicNFT is ERC721URIStorage {
 
     // console.log to see who has minted and when it was minted
     console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
+    console.log(totalMinted);
 
     emit NewEpicNFTMinted(msg.sender, newItemId);
+  }
+
+  function getTotalNFTsMintedSoFar() public view returns (uint) {
+    return totalMinted;
   }
 }

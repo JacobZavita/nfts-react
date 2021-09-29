@@ -10,11 +10,14 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0x5ea189E862a6b4ad947B8FA2F297b8076e0DE069";
+const CONTRACT_ADDRESS = "0x4e08734952E53E5cbce4cd36fF50fb27f6b8c485";
 
 const App = () => {
+  let totalMinted = ""
+  let something = "blah"
   const [currentAccount, setCurrentAccount] = useState("")
   const [miningAnimation, setMiningAnimation] = useState(false)
+  const [mintTotal, setMintTotal] = useState(totalMinted)
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -108,6 +111,7 @@ const App = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected()
+    getTotalNFTsMintedSoFar()
   }, [])
 
   const renderNotConnectedContainer = () => (
@@ -122,6 +126,17 @@ const App = () => {
     </button>
   )
 
+  const getTotalNFTsMintedSoFar = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+    
+    let count = await connectedContract.getTotalNFTsMintedSoFar()
+    totalMinted = count._hex.substring(3)
+    setMintTotal(totalMinted)
+  }
+
+
   return (
     <div className="App">
       {
@@ -133,8 +148,9 @@ const App = () => {
         <div className="header-container">
           <p className="header gradient-text">Jacob's NFT Collection</p>
           <p className="sub-text">
-            Each unique. Each inspiring. Discover your NFT today.
+            Each unique. Each inspiring.
           </p>
+          <p className="sub-text">{mintTotal}/50 NFTs minted. Discover your NFT today.</p>
           {currentAccount === "" ? renderNotConnectedContainer() : renderMintUI()}
         </div>
         <div className="footer-container">
