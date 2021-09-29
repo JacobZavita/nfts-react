@@ -5,8 +5,13 @@ module.exports = {
   solidity: '0.8.0',
   networks: {
     rinkeby: {
-      url: 'https://eth-rinkeby.alchemyapi.io/v2/yV6wz1HgDHEWBfq4QmnUPuDMRxh1Hj3z',
+      url: process.env.ALCHEMY_KEY,
       accounts: [process.env.PK],
     },
+    mainnet: {
+      chainId: 1,
+      url: process.env.ALCHEMY_KEY,
+      accounts: [process.env.PK],
+    }
   },
 };

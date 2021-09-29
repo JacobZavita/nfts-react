@@ -10,7 +10,7 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-fwxr1he4ti';
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0x4e08734952E53E5cbce4cd36fF50fb27f6b8c485";
+const CONTRACT_ADDRESS = "0x1E63f27d810bb7fD6Eb6474C98fC008Db011BFe3";
 
 const App = () => {
   let totalMinted = "0"
@@ -172,6 +172,8 @@ const App = () => {
           >{`built by @${TWITTER_HANDLE}`}</a>
         </div>
       </div>
+      <div className="circle1"></div>
+      <div className="circle2"></div>
     </div>
   );
 }
