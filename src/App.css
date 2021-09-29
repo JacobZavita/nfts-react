@@ -52,6 +52,7 @@
   background: -webkit-linear-gradient(left, #60c657, #35aee2);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
+  -webkit-animation: gradient-animation 4s ease infinite;
 }
 
 .mint-button {

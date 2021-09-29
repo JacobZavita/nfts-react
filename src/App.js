@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
+import Modal from './components/Modal'
+import twitterLogo from './assets/svgviewer-output.svg'
 import myEpicNft from './utils/MyEpicNFT.json'
 import './App.css';
 
@@ -12,6 +14,7 @@ const CONTRACT_ADDRESS = "0x5ea189E862a6b4ad947B8FA2F297b8076e0DE069";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("")
+  const [miningAnimation, setMiningAnimation] = useState(false)
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -90,9 +93,11 @@ const App = () => {
           let nftTxn = await connectedContract.makeAnEpicNFT()
 
           console.log("Mining... please wait")
+          setMiningAnimation(true);
           await nftTxn.wait()
           console.log(nftTxn)
           console.log(`Mined, tee transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`)
+          setMiningAnimation(false)
         } else {
           console.log("Ethereum object doesn't exist")
         }
@@ -119,6 +124,11 @@ const App = () => {
 
   return (
     <div className="App">
+      {
+        miningAnimation ? (
+          <Modal />
+        ) : null
+      }
       <div className="container">
         <div className="header-container">
           <p className="header gradient-text">Jacob's NFT Collection</p>
@@ -128,12 +138,13 @@ const App = () => {
           {currentAccount === "" ? renderNotConnectedContainer() : renderMintUI()}
         </div>
         <div className="footer-container">
+          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
             className="footer-text"
             href={TWITTER_LINK}
             target="_blank"
             rel="noreferrer"
-          >{`built on @${TWITTER_HANDLE}`}</a>
+          >{`built by @${TWITTER_HANDLE}`}</a>
         </div>
       </div>
     </div>
