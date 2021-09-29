@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -14,12 +14,16 @@ contract MyEpicNFT is ERC721URIStorage {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
-  string baseSvg = "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: sans-serif; font-size: 18px; }</style><rect width='100%' height='100%' fill='hsla(211, 96%, 62%, 1)' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
+  string svgPartOne = "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: serif; font-size: 18px; }</style><rect width='100%' height='100%' fill='";
+  string svgPartTwo = "'/><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
 
   string [] firstWords = ["Brilliantly", "Stunningly", "Blazingly", "Radiantly", "Dazzingly", "Incredibly", "Fabuously", "Astonishingly", "Obviously", "Remarkably", "Uncommonly", "Amazingly", "Particularly", "Extraordinarily", "Wonderfully", "Powerfully"];
   string[] secondWords = ["Outstanding", "Impressive", "Proud", "Challenging", "Exciting", "Imaginative", "Extravagant", "Fantastic", "Whimsical", "Fanciful", "Original", "Offbeat", "Visionary", "Enterprising", "Productive", "Ambitious"];
   string[] thirdWords = ["Performance", "Job", "Feat", "Project", "Undertaking", "Product", "Achievement", "Act", "Accomplishment", "Attainment", "Creation", "Deed", "Effort", "Success", "Triumph"];
 
+  string[] colors = ["red", "#08c2A8", "black", "hsla(211, 96%, 62%, 1)", "yellow", "blue", "purple"];
+
+  event NewEpicNFTMinted(address sender, uint256 tokenId);
 
   // We need to pass the name of our NFTs token and it's symbol.
   constructor() ERC721 ("SquareNFT", "SQUARE") {
@@ -44,6 +48,12 @@ contract MyEpicNFT is ERC721URIStorage {
     return thirdWords[rand];
   }
 
+  function pickRandomColor(uint256 tokenId) public view returns (string memory) {
+    uint256 rand = random(string(abi.encodePacked("COLOR", Strings.toString(tokenId))));
+    rand = rand % colors.length;
+    return colors[rand];
+  }
+
   function random(string memory input) internal pure returns (uint256) {
     return uint256(keccak256(abi.encodePacked(input)));
   }
@@ -56,7 +66,8 @@ contract MyEpicNFT is ERC721URIStorage {
     string memory third = pickRandomThirdWord(newItemId);
     string memory combinedWord = string(abi.encodePacked(first, ' ',  second, ' ', third));
 
-    string memory finalSvg = string(abi.encodePacked(baseSvg, combinedWord, "</text></svg>"));
+    string memory randomColor = pickRandomColor(newItemId);
+    string memory finalSvg = string(abi.encodePacked(svgPartOne, randomColor, svgPartTwo, combinedWord, "</text></svg>"));
 
     string memory json = Base64.encode(
       bytes(
@@ -77,7 +88,7 @@ contract MyEpicNFT is ERC721URIStorage {
     );
 
     console.log("\n--------------------");
-    console.log(finalSvg);
+    console.log(finalTokenUri);
     console.log("--------------------\n");
 
     // actually mint the NFT to the sender using msg.sender.
@@ -91,5 +102,7 @@ contract MyEpicNFT is ERC721URIStorage {
 
     // console.log to see who has minted and when it was minted
     console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
+
+    emit NewEpicNFTMinted(msg.sender, newItemId);
   }
 }
