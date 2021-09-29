@@ -18,9 +18,10 @@
 }
 
 .header {
-  margin: 0;
+  margin: 0 0 15px 0;
   font-size: 50px;
   font-weight: bold;
+
 }
 
 .sub-text {
@@ -64,6 +65,14 @@
 
 .opensea-button {
   background-color: rgb(32, 129, 226);
+  padding: 13px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  text-decoration: none;
+  color: white;
 }
 
 .mint-count {

@@ -7,14 +7,13 @@ import './App.css';
 
 const TWITTER_HANDLE = 'JacobZavita';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = '';
+const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-fwxr1he4ti';
 const TOTAL_MINT_COUNT = 50;
 
 const CONTRACT_ADDRESS = "0x4e08734952E53E5cbce4cd36fF50fb27f6b8c485";
 
 const App = () => {
-  let totalMinted = ""
-  let something = "blah"
+  let totalMinted = "0"
   const [currentAccount, setCurrentAccount] = useState("")
   const [miningAnimation, setMiningAnimation] = useState(false)
   const [mintTotal, setMintTotal] = useState(totalMinted)
@@ -27,6 +26,7 @@ const App = () => {
       return;
     } else {
       console.log("We have the ethereum object", ethereum);
+      console.log(window.ethereum.networkVersion, 'window.ethereum.networkVersion');
     }
     
     const accounts = await ethereum.request({ method: 'eth_accounts' });
@@ -147,10 +147,19 @@ const App = () => {
       <div className="container">
         <div className="header-container">
           <p className="header gradient-text">Jacob's NFT Collection</p>
+          <a
+            className="opensea-button"
+            href={OPENSEA_LINK}
+            target="_blank"
+            rel="noreferrer"
+          >🌊 View Collection on OpenSea</a>
           <p className="sub-text">
             Each unique. Each inspiring.
           </p>
-          <p className="sub-text">{mintTotal}/50 NFTs minted. Discover your NFT today.</p>
+          <p className="sub-text">
+            {mintTotal}/50 NFTs minted. Discover your NFT today.
+          </p>
+          
           {currentAccount === "" ? renderNotConnectedContainer() : renderMintUI()}
         </div>
         <div className="footer-container">
