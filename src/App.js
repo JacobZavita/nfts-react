@@ -2,15 +2,16 @@ import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import Modal from './components/Modal'
 import twitterLogo from './assets/svgviewer-output.svg'
+import openseaLogo from './assets/opensea-logo.png'
 import myEpicNft from './utils/MyEpicNFT.json'
 import './App.css';
 
 const TWITTER_HANDLE = 'JacobZavita';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-fwxr1he4ti';
+const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-xybjmboedm';
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0x1E63f27d810bb7fD6Eb6474C98fC008Db011BFe3";
+const CONTRACT_ADDRESS = "0x299a7C1d653c84bf3A70aF5c4fdaDf2A004C69CD";
 
 const App = () => {
   let totalMinted = "0"
@@ -121,7 +122,7 @@ const App = () => {
   );
 
   const renderMintUI = () => (
-    <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
+    <button onClick={askContractToMintNft} className="cta-button mint-button">
       Mint NFT
     </button>
   )
@@ -135,7 +136,6 @@ const App = () => {
     totalMinted = count._hex.substring(3)
     setMintTotal(totalMinted)
   }
-
 
   return (
     <div className="App">
@@ -152,7 +152,8 @@ const App = () => {
             href={OPENSEA_LINK}
             target="_blank"
             rel="noreferrer"
-          >🌊 View Collection on OpenSea</a>
+          >
+            <img src={openseaLogo} alt="opensea-logo" className="opensea-logo" />View Collection on OpenSea</a>
           <p className="sub-text">
             Each unique. Each inspiring.
           </p>
@@ -161,6 +162,12 @@ const App = () => {
           </p>
           
           {currentAccount === "" ? renderNotConnectedContainer() : renderMintUI()}
+          {/* maybe add in examples here */}
+          {/* <div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div> */}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
@@ -169,11 +176,16 @@ const App = () => {
             href={TWITTER_LINK}
             target="_blank"
             rel="noreferrer"
-          >{`built by @${TWITTER_HANDLE}`}</a>
+          >{`built with @_buildspace by @${TWITTER_HANDLE}`}</a>
         </div>
       </div>
       <div className="circle1"></div>
       <div className="circle2"></div>
+      <div className="wave wave1"></div>
+      <div className="wave wave2"></div>
+      {/* put little guy on wave3 */}
+      <div className="wave wave3"></div>
+      <div className="wave wave4"></div>
     </div>
   );
 }

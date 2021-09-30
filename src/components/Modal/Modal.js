@@ -9,6 +9,7 @@ const Modal = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10;
   `
 
   const ModalWrapper = styled.div`
@@ -25,7 +26,7 @@ const Modal = () => {
     display: grid;
     grid-template-columns: 1fr 1fr;
     position: relative;
-    z-index: 10;
+    z-index: 11;
     border-radius: 10px;
     animation: gradient-animation 4s ease infinite;
     -webkit-animation: gradient-animation 4s ease infinite;
@@ -38,15 +39,7 @@ const Modal = () => {
     align-items: center;
     line-height: 1.8;
     color: #141414;
-    p {
-      margin-bottom: 1rem;
-    }
-    button {
-      padding: 10px 24px;
-      background: #141414;
-      color: #fff;
-      border: none;
-    }
+    z-index: 12;
   `
 
   return (
@@ -54,7 +47,7 @@ const Modal = () => {
       <ModalWrapper>
         <ModalContent>
           <img src="https://i.ibb.co/bWNHYm7/miner.gif" height="150" width="150" alt="miner-animation" className="modalImg" />
-          <h3 className="modalH3">Mining Your NFT...</h3>
+          <h3 className="modalH3">Minting Your NFT...</h3>
         </ModalContent>
       </ModalWrapper>
     </Background>
