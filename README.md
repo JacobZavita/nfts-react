@@ -1,15 +1,4 @@
-# Basic Sample Hardhat Project
+# React-NFTs
+This is a simple project I built to mint a collection of NFTs. Built using hardhat, ethers.js, Solidity, and React. It includes a smart contract that mints a series of up to 50 unique NFTs from a front-end app. The user can then see the NFT sent to their wallet and on OpenSea.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+This is an ongoing project deployed on the Rinkeby testnet. I am currently collaborating with an artist to make the art itself more interesting.

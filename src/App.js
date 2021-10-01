@@ -18,6 +18,7 @@ const App = () => {
   const [currentAccount, setCurrentAccount] = useState("")
   const [miningAnimation, setMiningAnimation] = useState(false)
   const [mintTotal, setMintTotal] = useState(totalMinted)
+  const [currentNetwork, setCurrentNetwork] = useState("")
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -40,6 +41,15 @@ const App = () => {
     } else {
       console.log("No authorized account found")
     }
+
+    // const network = window.ethereum.networkVersion
+    // if (network === '4') {
+    //   console.log("on rinkeby testnet")
+    //   setCurrentNetwork(network)
+    // } else {
+    //   console.log("Please switch to rinkeby testnet")
+    //   setCurrentNetwork(network)
+    // }
   }
 
   const connectWallet = async () => {
@@ -127,6 +137,10 @@ const App = () => {
     </button>
   )
 
+  const renderNetworkPrompt = () => (
+    alert("Hello there, This app is built on the rinkeby testnet and it looks like you are on a different ethereum network. Please switch to the Rinkeby testnet to continue")
+  )
+
   const getTotalNFTsMintedSoFar = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -160,14 +174,7 @@ const App = () => {
           <p className="sub-text">
             {mintTotal}/50 NFTs minted. Discover your NFT today.
           </p>
-          
           {currentAccount === "" ? renderNotConnectedContainer() : renderMintUI()}
-          {/* maybe add in examples here */}
-          {/* <div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div> */}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
