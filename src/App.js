@@ -14,7 +14,7 @@ const TOTAL_MINT_COUNT = 50;
 const CONTRACT_ADDRESS = "0x299a7C1d653c84bf3A70aF5c4fdaDf2A004C69CD";
 
 const App = () => {
-  let totalMinted = "0"
+  let totalMinted = "4"
   const [currentAccount, setCurrentAccount] = useState("")
   const [miningAnimation, setMiningAnimation] = useState(false)
   const [mintTotal, setMintTotal] = useState(totalMinted)
@@ -41,15 +41,6 @@ const App = () => {
     } else {
       console.log("No authorized account found")
     }
-
-    // const network = window.ethereum.networkVersion
-    // if (network === '4') {
-    //   console.log("on rinkeby testnet")
-    //   setCurrentNetwork(network)
-    // } else {
-    //   console.log("Please switch to rinkeby testnet")
-    //   setCurrentNetwork(network)
-    // }
   }
 
   const connectWallet = async () => {
@@ -103,10 +94,10 @@ const App = () => {
           const signer = provider.getSigner()
           const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer)
 
-          console.log("Going to pop wallet now to pay gas...")
+          // console.log("Going to pop wallet now to pay gas...")
           let nftTxn = await connectedContract.makeAnEpicNFT()
 
-          console.log("Mining... please wait")
+          // console.log("Mining... please wait")
           setMiningAnimation(true);
           await nftTxn.wait()
           console.log(nftTxn)
@@ -147,8 +138,9 @@ const App = () => {
     const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
     
     let count = await connectedContract.getTotalNFTsMintedSoFar()
-    totalMinted = count._hex.substring(3)
+    totalMinted++
     setMintTotal(totalMinted)
+    // console.log(count)
   }
 
   return (
