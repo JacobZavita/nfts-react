@@ -14,7 +14,7 @@ const TOTAL_MINT_COUNT = 50;
 const CONTRACT_ADDRESS = "0xC927f6b7DAc4B660349D596d219f6eA7B7C01B57";
 
 const App = () => {
-  let totalMinted = "27"
+  let totalMinted
   const [currentAccount, setCurrentAccount] = useState("")
   const [miningAnimation, setMiningAnimation] = useState(false)
   const [mintTotal, setMintTotal] = useState(totalMinted)
@@ -138,9 +138,8 @@ const App = () => {
     const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
     
     let count = await connectedContract.getTotalNFTsMintedSoFar()
-    totalMinted++
-    setMintTotal(totalMinted)
-    // console.log(count)
+    setMintTotal(count._hex.substring(3))
+    console.log(count._hex.substring(3))
   }
 
   return (
