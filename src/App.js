@@ -11,10 +11,10 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = 'https://testnets.opensea.io/collection/squarenft-xybjmboedm';
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0x299a7C1d653c84bf3A70aF5c4fdaDf2A004C69CD";
+const CONTRACT_ADDRESS = "0xC927f6b7DAc4B660349D596d219f6eA7B7C01B57";
 
 const App = () => {
-  let totalMinted = "4"
+  let totalMinted = "27"
   const [currentAccount, setCurrentAccount] = useState("")
   const [miningAnimation, setMiningAnimation] = useState(false)
   const [mintTotal, setMintTotal] = useState(totalMinted)

@@ -13,7 +13,8 @@ import { Base64 } from "./libraries/Base64.sol";
 contract MyEpicNFT is ERC721URIStorage {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
-  uint totalMinted;
+  Counters.Counter public _tokenTotal;
+  // uint totalMinted;
 
   string svgPartOne = "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: sans-serif; font-size: 18px; }</style><rect width='100%' height='100%' fill='";
   string svgPartTwo = "'/><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
@@ -63,6 +64,7 @@ contract MyEpicNFT is ERC721URIStorage {
     require(_tokenIds.current() <= 50);
 
     uint256 newItemId = _tokenIds.current();
+    // uint256 totalMinted = _tokenTotal.current();
 
     string memory first = pickRandomFirstWord(newItemId);
     string memory second = pickRandomSecondWord(newItemId);
@@ -94,7 +96,7 @@ contract MyEpicNFT is ERC721URIStorage {
     console.log(finalTokenUri);
     console.log("--------------------\n");
 
-    totalMinted += 1;
+    // totalMinted += 1;
 
     // actually mint the NFT to the sender using msg.sender.
     _safeMint(msg.sender, newItemId);
@@ -105,14 +107,17 @@ contract MyEpicNFT is ERC721URIStorage {
     // Increment the counter for when the next NFT is minted
     _tokenIds.increment();
 
+    // Increment the total when the next is minted
+    _tokenTotal.increment();
+
     // console.log to see who has minted and when it was minted
     console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
-    console.log(totalMinted);
+    console.log(_tokenTotal.current());
 
     emit NewEpicNFTMinted(msg.sender, newItemId);
   }
 
   function getTotalNFTsMintedSoFar() public view returns (uint) {
-    return totalMinted;
+    return _tokenTotal.current();
   }
 }
